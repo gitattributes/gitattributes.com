@@ -1,0 +1,44 @@
+; Editors Configuration
+; See http://editorconfig.org/ for more information.
+
+
+# top-most EditorConfig file
+root = true
+
+; Defaults
+[*]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+
+; C# settings
+[*.cs]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+
+
+; ASP.NET 5 Project Files
+[global.json]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+
+[*.json]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+
+; Markdown files
+[*.md]
+indent_style = space
+insert_final_newline = false
+
+
+; NuGet packages configuration files
+[packages.config]
+indent_style = space
+indent_size = 2
+insert_final_newline = false
