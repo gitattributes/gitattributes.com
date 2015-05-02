@@ -1,0 +1,15 @@
+﻿@using GitAttributesWeb
+@inject IOptions<AppSettings> AppSettings
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@AppSettings.Options.SiteTitle - @ViewBag.Title</title>
+</head>
+<body>
+  <div class="container body-content">
+    @RenderBody()
+  </div>
+</body>
+</html>
