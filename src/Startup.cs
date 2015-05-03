@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GitAttributesWeb.Utils;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Routing;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
@@ -34,6 +36,13 @@ namespace GitAttributesWeb
 
             // Add MVC services to the services container.
             services.AddMvc();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.OutputFormatters.Clear();
+
+                var textOutput = new StringOutputFormatter2();
+                options.OutputFormatters.Add(textOutput);
+            });
 
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.

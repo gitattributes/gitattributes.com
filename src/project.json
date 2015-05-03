@@ -41,6 +41,6 @@
   ],
   "scripts": {
     "postrestore": [ "npm install", "bower install" ],
-    "prepare": [ ]
+    "prepare": [ "copy" ]
   }
 }
