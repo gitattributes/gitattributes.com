@@ -12,7 +12,6 @@ using Microsoft.AspNet.Routing;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
 
 namespace GitAttributesWeb
 {
@@ -21,10 +20,18 @@ namespace GitAttributesWeb
         public Startup(IHostingEnvironment env)
         {
             // Setup configuration sources.
-            Configuration = new Configuration()
+            var configuration = new Configuration()
                 .AddJsonFile("config.json")
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsEnvironment("dev"))
+            {
+                configuration.AddApplicationInsightsSettings(developerMode: true);
+            }
+
+            configuration.AddEnvironmentVariables();
+
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; set; }
@@ -32,6 +39,8 @@ namespace GitAttributesWeb
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
 
             // Add MVC services to the services container.
@@ -57,6 +66,9 @@ namespace GitAttributesWeb
             // Add the console logger.
             loggerfactory.AddConsole();
 
+            // Add Application Insights monitoring to the request pipeline as a very first middleware.
+            app.UseApplicationInsightsRequestTelemetry();
+
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))
             {
@@ -69,6 +81,8 @@ namespace GitAttributesWeb
                 // send the request to the following path or controller action.
                 app.UseErrorHandler("/Home/Error");
             }
+
+            app.UseApplicationInsightsExceptionTelemetry();
 
             // Add static files to the request pipeline.
             app.UseStaticFiles();

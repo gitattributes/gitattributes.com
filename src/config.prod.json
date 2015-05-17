@@ -1,5 +1,5 @@
 {
-  "AppSettings": {
+  "ApplicationInsights": {
     "InstrumentationKey": "98685228-7065-4b70-9efd-650de46e7ffe"
   }
 }
