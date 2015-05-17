@@ -2,9 +2,8 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "environmentVariables": {
-        "ASPNET_ENV": "dev"
+        "ASPNET_ENV": "prod"
       }
     }
   }

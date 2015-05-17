@@ -3,3 +3,16 @@
 }
 
 <p>Create <code>.gitattributes</code> files for your project.</p>
+
+<p>
+  <input type="text" id="select">
+</p>
+
+<script>
+  $(document).ready(function() {
+    $('#select').selectize({
+      plugins: ['restore_on_backspace', 'remove_button'],
+      delimiter: ','
+    });
+  })
+</script>

@@ -2,5 +2,14 @@
   "name": "gitattributes.io",
   "private": true,
   "dependencies": {
+    "selectize": "0.12.1"
+  },
+  "overrides": {
+    "selectize": {
+      "main": [
+        "./dist/css/*",
+        "./dist/js/standalone/*"
+      ]
+    }
   }
 }
