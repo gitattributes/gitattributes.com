@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject GitAttributesWeb.Utils.AppData AppData
+
+@{
     ViewBag.Title = "Create .gitattributes files for your project";
 }
 
@@ -12,7 +14,14 @@
   $(document).ready(function() {
     $('#select').selectize({
       plugins: ['restore_on_backspace', 'remove_button'],
-      delimiter: ','
+      options: @Html.Raw(AppData.FilesJson),
+      valueField: 'id',
+      labelField: 'name',
+      searchField: ['name'],
+      delimiter: ',',
+      persist: false,
+      create: false,
+      selectOnTab: true
     });
   })
 </script>

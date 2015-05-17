@@ -3,7 +3,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "environmentVariables": {
-        "ASPNET_ENV": "prod"
+        "ASPNET_ENV": "dev"
       }
     }
   }

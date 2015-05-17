@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using GitAttributesWeb.Utils;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Runtime;
@@ -13,11 +14,11 @@ namespace GitAttributesWeb.Controllers
     [Route("api")]
     public class ApiController : Controller
     {
-        private readonly IHostingEnvironment env;
+        private readonly AppData data;
 
-        public ApiController(IHostingEnvironment env)
+        public ApiController(AppData data)
         {
-            this.env = env;
+            this.data = data;
         }
 
         // GET: api/list
@@ -25,13 +26,8 @@ namespace GitAttributesWeb.Controllers
         [Route("list")]
         public IEnumerable<string> Get()
         {
-            var dataPath = Path.Combine(this.env.WebRootPath, "data");
-            var files = PathResolver.PerformWildcardSearch(dataPath, "*.gitattributes");
-
-            var q = from file in files
-                    let name = Path.GetFileNameWithoutExtension(file).ToLowerInvariant()
-                    orderby name
-                    select name;
+            var q = from file in this.data.Files
+                    select file.Id;
 
             return q.ToList();
         }
@@ -41,12 +37,8 @@ namespace GitAttributesWeb.Controllers
         [Route("{id}")]
         public IActionResult Get(string id)
         {
-            var dataPath = Path.Combine(this.env.WebRootPath, "data");
-            var files = PathResolver.PerformWildcardSearch(dataPath, "*.gitattributes");
-
-            var q = from file in files
-                    let name = Path.GetFileNameWithoutExtension(file).ToLowerInvariant()
-                    where name == id
+            var q = from file in this.data.Files
+                    where file.Id == id
                     select file;
 
             var validFile = q.FirstOrDefault();
@@ -55,7 +47,7 @@ namespace GitAttributesWeb.Controllers
                 return new NoContentResult();
             }
 
-            string content = System.IO.File.ReadAllText(validFile);
+            string content = System.IO.File.ReadAllText(validFile.Path);
 
             return Content(content);
         }
@@ -65,12 +57,8 @@ namespace GitAttributesWeb.Controllers
         [Route("f/{id}")]
         public IActionResult GetFile(string id)
         {
-            var dataPath = Path.Combine(this.env.WebRootPath, "data");
-            var files = PathResolver.PerformWildcardSearch(dataPath, "*.gitattributes");
-
-            var q = from file in files
-                    let name = Path.GetFileNameWithoutExtension(file).ToLowerInvariant()
-                    where name == id
+            var q = from file in this.data.Files
+                    where file.Id == id
                     select file;
 
             var validFile = q.FirstOrDefault();
@@ -79,7 +67,7 @@ namespace GitAttributesWeb.Controllers
                 return new NoContentResult();
             }
 
-            var content = System.IO.File.ReadAllBytes(validFile);
+            var content = System.IO.File.ReadAllBytes(validFile.Path);
 
             return File(content, contentType: "text/plain", fileDownloadName: "gitattributes");
         }
