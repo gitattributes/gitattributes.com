@@ -9,7 +9,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Routing;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Dnx.Runtime;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 
@@ -17,10 +18,10 @@ namespace GitAttributesWeb
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Setup configuration sources.
-            var configuration = new Configuration()
+            var configuration = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
@@ -31,7 +32,7 @@ namespace GitAttributesWeb
 
             configuration.AddEnvironmentVariables();
 
-            this.Configuration = configuration;
+            this.Configuration = configuration.Build();
         }
 
         public IConfiguration Configuration { get; set; }
@@ -41,7 +42,7 @@ namespace GitAttributesWeb
         {
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add MVC services to the services container.
             services.AddMvc();
@@ -75,7 +76,7 @@ namespace GitAttributesWeb
             if (env.IsEnvironment("Development"))
             {
                 app.UseBrowserLink();
-                app.UseErrorPage(ErrorPageOptions.ShowAll);
+                app.UseErrorPage();
             }
             else
             {

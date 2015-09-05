@@ -26,7 +26,7 @@ namespace GitAttributesWeb.Utils
             {
                 string result = string.Join(",", valueAsEnumerable);
 
-                var response = context.ActionContext.HttpContext.Response;
+                var response = context.HttpContext.Response;
                 await response.WriteAsync(result, context.SelectedEncoding);
                 return;
             }

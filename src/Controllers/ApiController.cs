@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using GitAttributesWeb.Utils;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc;
-using Microsoft.Framework.Runtime;
-using NuGet;
 
 namespace GitAttributesWeb.Controllers
 {
