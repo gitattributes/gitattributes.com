@@ -1,11 +1,12 @@
-﻿@inject IOptions<AppSettings> AppSettings
+﻿@using Microsoft.Extensions.OptionsModel
+@inject IOptions<AppSettings> AppSettings
 @inject Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration TelemetryConfiguration
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@AppSettings.Options.SiteTitle - @ViewBag.Title</title>
+  <title>@AppSettings.Value.SiteTitle - @ViewBag.Title</title>
   <link rel="stylesheet" type="text/css" href="~/lib/selectize/css/selectize.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="~/lib/selectize/js/selectize.js"></script>
