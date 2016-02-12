@@ -4,7 +4,7 @@
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "~3.9.1",
-    "gulp-bower-normalize": "^1.0.5",
-    "main-bower-files": "^2.7.0"
+    "gulp-bower-normalize": "~1.0.6",
+    "main-bower-files": "~2.11.1"
   }
 }
