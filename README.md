@@ -1,8 +1,8 @@
 # gitattributes.io
 
-Create `.gitattributes` for your projects.
+> Create `.gitattributes` file for your project.
 
 
 ## License
 
-Licensed under MIT License. Copyright (c) 2015 Jozef Izso.
+Copyright (c) 2015-2016 Jozef Izso, [MIT License](LICENSE)
