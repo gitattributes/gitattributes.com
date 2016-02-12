@@ -4,15 +4,24 @@
     ViewBag.Title = "Create .gitattributes file for your project";
 }
 
-<p>
+<div class="input-group">
   <input type="text" id="select">
-</p>
+  <div class="input-group-btn">
+    <button class="btn btn-info" type="button">Generate</button>
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" style="padding: 6px 12px"><span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a href="#">Download file</a></li>
+    </ul>
+  </div>
+</div>
 
 <script>
   $(document).ready(function() {
     $('#select').selectize({
       plugins: ['restore_on_backspace', 'remove_button'],
+      inputClass: 'form-control selectize-input',
       options: @Html.Raw(AppData.FilesJson),
+      placeholder: 'Select file types to generate gitattributes file',
       valueField: 'id',
       labelField: 'name',
       searchField: ['name'],
