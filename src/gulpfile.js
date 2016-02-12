@@ -14,8 +14,8 @@ var paths = {
   data: "./" + project.webroot + "/data/"
 };
 
-gulp.task("clean", function (cb) {
-  del([paths.lib, paths.data], cb);
+gulp.task("clean", function () {
+  return del([paths.lib, paths.data]);
 });
 
 gulp.task("copy", ["clean"], function () {
