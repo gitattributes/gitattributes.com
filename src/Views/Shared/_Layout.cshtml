@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@AppSettings.Value.SiteTitle - @ViewBag.Title</title>
   <link rel="stylesheet" type="text/css" href="~/lib/selectize/css/selectize.css">
+  <link rel="stylesheet" type="text/css" href="~/lib/bootswatch-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="~/css/site.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="~/lib/selectize/js/selectize.js"></script>
 
@@ -16,8 +18,19 @@
   </environment>
 </head>
 <body>
-  <div class="container body-content">
-    @RenderBody()
-  </div>
+<div class="container body-content">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">.gitattributes</a>
+      </div>
+    </div>
+  </nav>
+  <blockquote>
+    <p>Create <span class="text-info">.gitattributes</span> file for your project.</p>
+  </blockquote>
+
+  @RenderBody()
+</div>
 </body>
 </html>

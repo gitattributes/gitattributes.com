@@ -2,6 +2,7 @@
   "name": "gitattributes.io",
   "private": true,
   "dependencies": {
+    "bootswatch-dist": "3.3.6-paper",
     "selectize": "0.12.1"
   },
   "overrides": {
@@ -10,6 +11,18 @@
         "./dist/css/*",
         "./dist/js/standalone/*"
       ]
+    },
+    "bootswatch-dist": {
+      "main": [
+        "./css/*",
+        "./js/*",
+        "./fonts/*"
+      ],
+      "normalize": {
+        "css": [ "*.css", "*.css.map" ],
+        "fonts": [ "*.eot", "*.otf", "*.svg", "*.ttf", "*.woff", "*.woff2" ],
+        "js": [ "*.js", "*.js.map" ]
+      }
     }
   }
 }
