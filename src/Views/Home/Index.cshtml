@@ -5,19 +5,20 @@
 }
 
 <div class="input-group">
-  <input type="text" id="select">
+  <input type="text" id="types">
   <div class="input-group-btn">
-    <button class="btn btn-info" type="button">Generate</button>
-    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" style="padding: 6px 12px"><span class="caret"></span></button>
+    <button id="btnGenerate" class="btn btn-info" type="button">Generate</button>
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
     <ul class="dropdown-menu dropdown-menu-right">
-      <li><a href="#">Download file</a></li>
+      <li><a href="#" id="btnDownload">Download file</a></li>
     </ul>
   </div>
 </div>
 
 <script>
   $(document).ready(function() {
-    $('#select').selectize({
+    var types = $('#types');
+    types.selectize({
       plugins: ['restore_on_backspace', 'remove_button'],
       inputClass: 'form-control selectize-input',
       options: @Html.Raw(AppData.FilesJson),
@@ -29,6 +30,22 @@
       persist: false,
       create: false,
       selectOnTab: true
+    });
+
+    $('#btnGenerate').on('click', function() {
+      var typesValue = types.val();
+      if (typesValue.length) {
+        var uriEncodedFiles = encodeURIComponent(typesValue);
+        window.location="/api/"+uriEncodedFiles;
+      }
+    });
+
+    $('#btnDownload').on('click', function() {
+      var typesValue = types.val();
+      if (typesValue.length) {
+        var uriEncodedFiles = encodeURIComponent(typesValue);
+        window.location="/api/f/"+uriEncodedFiles;
+      }
     });
   })
 </script>

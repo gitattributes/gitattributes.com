@@ -7,3 +7,21 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+
+.form-control {
+  border: 1px solid #dfa0ea;
+  padding: 3px 6px;
+  box-shadow: none; /*inset 0 -1px 0 #dfa0ea;*/
+}
+
+.selectize-input.focus {
+  box-shadow: none; /* inset 1px 1px 0 #dfa0ea;*/
+}
+
+.selectize-control.multi .selectize-input.has-items {
+  padding: 3px 4px;
+}
+
+button.dropdown-toggle {
+  padding: 6px 12px;
+}
