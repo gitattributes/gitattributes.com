@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using GitAttributesWeb.Utils;
 using Microsoft.AspNet.Hosting;
@@ -30,44 +31,64 @@ namespace GitAttributesWeb.Controllers
             return q.ToList();
         }
 
-        // GET: api/{id}
+        // GET: api/{types}
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult Get(string id)
+        [Route("{types}")]
+        public async Task<IActionResult> Get(string types)
         {
-            var q = from file in this.data.Files
-                    where file.Id == id
-                    select file;
-
-            var validFile = q.FirstOrDefault();
-            if (validFile == null)
+            var content = await GetAttributesContent(types);
+            if (content == null)
             {
                 return new NoContentResult();
             }
-
-            string content = System.IO.File.ReadAllText(validFile.Path);
 
             return Content(content);
         }
 
         // GET: api/f/{id}
         [HttpGet]
-        [Route("f/{id}")]
-        public IActionResult GetFile(string id)
+        [Route("f/{types}")]
+        public async Task<IActionResult> GetFile(string types)
         {
-            var q = from file in this.data.Files
-                    where file.Id == id
-                    select file;
-
-            var validFile = q.FirstOrDefault();
-            if (validFile == null)
+            var content = await GetAttributesContent(types);
+            if (content == null)
             {
                 return new NoContentResult();
             }
 
-            var content = System.IO.File.ReadAllBytes(validFile.Path);
+            var bytes = Encoding.UTF8.GetBytes(content);
+            return File(bytes, contentType: "text/plain", fileDownloadName: "gitattributes");
+        }
 
-            return File(content, contentType: "text/plain", fileDownloadName: "gitattributes");
+        private async Task<string> GetAttributesContent(string types)
+        {
+            if (String.IsNullOrWhiteSpace(types))
+            {
+                return null;
+            }
+
+            var list = types.Split(',');
+
+            var q = from file in this.data.Files
+                    where list.Contains(file.Id)
+                    select file;
+
+            if (!q.Any())
+            {
+                return null;
+            }
+
+            var sb = new StringBuilder();
+            foreach (var file in q.ToList())
+            {
+                using (var reader = System.IO.File.OpenText(file.Path))
+                {
+                    var content = await reader.ReadToEndAsync();
+                    sb.Append(content);
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }
