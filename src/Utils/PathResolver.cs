@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.DotNet.Tools.Common;
 
 namespace NuGet
 {

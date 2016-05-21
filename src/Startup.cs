@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GitAttributesWeb.Utils;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,7 +18,8 @@ namespace GitAttributesWeb
         {
             // Setup configuration sources.
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("config.json")
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("config.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
@@ -31,14 +32,14 @@ namespace GitAttributesWeb
             this.Configuration = configuration.Build();
         }
 
-        public IConfiguration Configuration { get; set; }
+        public IConfigurationRoot Configuration { get; set; }
 
-        // This method gets called by the runtime.
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry(Configuration);
-
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            
+            ////services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add MVC services to the services container.
             services.AddMvc();
@@ -51,18 +52,11 @@ namespace GitAttributesWeb
             });
 
             services.AddSingleton<AppData>();
-
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
         }
 
-        // Configure is called after ConfigureServices is called.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // Configure the HTTP request pipeline.
-
-            // Add the console logger.
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -72,8 +66,8 @@ namespace GitAttributesWeb
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -84,8 +78,6 @@ namespace GitAttributesWeb
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
-
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 
@@ -95,13 +87,7 @@ namespace GitAttributesWeb
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                // Uncomment the following line to add a route for porting Web API 2 controllers.
-                // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
             });
         }
-
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
