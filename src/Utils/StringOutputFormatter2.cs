@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc.Formatters;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 
 namespace GitAttributesWeb.Utils
@@ -21,7 +21,7 @@ namespace GitAttributesWeb.Utils
             return base.CanWriteResult(context);
         }
 
-        public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context)
+        public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding encoding)
         {
             var valueAsEnumerable = context.Object as IEnumerable<string>;
             if (valueAsEnumerable != null)
@@ -29,13 +29,11 @@ namespace GitAttributesWeb.Utils
                 string result = string.Join(",", valueAsEnumerable);
                 
                 var response = context.HttpContext.Response;
-                MediaTypeHeaderValue contentType = ((OutputFormatterCanWriteContext)context).ContentType;
-                Encoding encoding = (contentType != null ? contentType.Encoding : (Encoding)null) ?? Encoding.UTF8;
                 CancellationToken cancellationToken = new CancellationToken();
                 await response.WriteAsync(result, encoding, cancellationToken);
             }
 
-            await base.WriteResponseBodyAsync(context);
+            await base.WriteResponseBodyAsync(context, encoding);
         }
     }
 }
