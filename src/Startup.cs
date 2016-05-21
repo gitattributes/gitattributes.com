@@ -38,8 +38,8 @@ namespace GitAttributesWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry(Configuration);
-            
-            ////services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add MVC services to the services container.
             services.AddMvc();
