@@ -79,6 +79,12 @@ namespace GitAttributesWeb
                 options.MaxAge(minutes: 10).IncludeSubdomains();
             });
 
+            // configure X-Frame-Options policy
+            app.UseXfo(options => options.Deny());
+
+            // configure X-XSS-Protection policy
+            app.UseXXssProtection(options => options.EnabledWithBlockMode());
+
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
