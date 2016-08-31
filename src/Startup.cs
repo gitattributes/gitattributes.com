@@ -79,6 +79,9 @@ namespace GitAttributesWeb
                 options.MaxAge(minutes: 10).IncludeSubdomains();
             });
 
+            // configure X-Content-Type-Options policy
+            app.UseXContentTypeOptions();
+
             // configure X-Frame-Options policy
             app.UseXfo(options => options.Deny());
 
