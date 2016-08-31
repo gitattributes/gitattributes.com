@@ -12,37 +12,7 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function() {
-    var types = $('#types');
-    types.selectize({
-      plugins: ['restore_on_backspace', 'remove_button'],
-      inputClass: 'form-control selectize-input',
-      options: @Html.Raw(AppData.FilesJson),
-      placeholder: 'Select file types to generate gitattributes file',
-      valueField: 'id',
-      labelField: 'name',
-      searchField: ['name'],
-      delimiter: ',',
-      persist: false,
-      create: false,
-      selectOnTab: true
-    });
-
-    $('#btnGenerate').on('click', function() {
-      var typesValue = types.val();
-      if (typesValue.length) {
-        var uriEncodedFiles = encodeURIComponent(typesValue);
-        window.location="/api/"+uriEncodedFiles;
-      }
-    });
-
-    $('#btnDownload').on('click', function() {
-      var typesValue = types.val();
-      if (typesValue.length) {
-        var uriEncodedFiles = encodeURIComponent(typesValue);
-        window.location="/api/f/"+uriEncodedFiles;
-      }
-    });
-  })
+<script id="ignores-data" type="application/json">
+  @Html.Raw(AppData.FilesJson)
 </script>
+<script src="~/lib/site.js"></script>

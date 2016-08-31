@@ -10,3 +10,4 @@
 /// <reference path="lib/microplugin/js/microplugin.js" />
 /// <reference path="lib/selectize/js/selectize.js" />
 /// <reference path="lib/sifter/js/sifter.js" />
+/// <reference path="lib/site.js" />

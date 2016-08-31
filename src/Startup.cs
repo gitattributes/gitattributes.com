@@ -68,7 +68,7 @@ namespace GitAttributesWeb
             {
                 options.DefaultSources(s => s.Self());
                 options.StyleSources(s => s.Self().CustomSources("fonts.googleapis.com"));
-                options.ScriptSources(s => s.Self().CustomSources("code.jquery.com").UnsafeInline());
+                options.ScriptSources(s => s.Self().CustomSources("code.jquery.com"));
                 options.FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com"));
 
                 options.ReportUris(s => s.Uris("https://goit.report-uri.io/r/default/csp/enforce"));
