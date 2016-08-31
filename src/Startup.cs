@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NWebsec.AspNetCore.Middleware;
 
 namespace GitAttributesWeb
 {
@@ -62,6 +63,14 @@ namespace GitAttributesWeb
 
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
             app.UseApplicationInsightsRequestTelemetry();
+
+            app.UseCsp(options =>
+            {
+                options.DefaultSources(s => s.Self());
+                options.StyleSources(s => s.Self().CustomSources("fonts.googleapis.com"));
+                options.ScriptSources(s => s.Self().CustomSources("code.jquery.com").UnsafeInline());
+                options.FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com"));
+            });
 
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())

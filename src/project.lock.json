@@ -1942,6 +1942,32 @@
           "lib/netstandard1.0/NuGet.Versioning.dll": {}
         }
       },
+      "NWebsec.AspNetCore.Core/1.0.0-gamma1-15": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "System.Text.RegularExpressions": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/NWebsec.AspNetCore.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/NWebsec.AspNetCore.Core.dll": {}
+        }
+      },
+      "NWebsec.AspNetCore.Middleware/1.0.0-gamma1-15": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "NWebsec.AspNetCore.Core": "1.0.0-gamma1-15"
+        },
+        "compile": {
+          "lib/netstandard1.3/NWebsec.AspNetCore.Middleware.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/NWebsec.AspNetCore.Middleware.dll": {}
+        }
+      },
       "runtime.native.System/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -5442,6 +5468,32 @@
         "lib/net45/NuGet.Versioning.xml",
         "lib/netstandard1.0/NuGet.Versioning.dll",
         "lib/netstandard1.0/NuGet.Versioning.xml"
+      ]
+    },
+    "NWebsec.AspNetCore.Core/1.0.0-gamma1-15": {
+      "sha512": "MXJVL1f9ZSH9rMZwW6dpLWxkkdDzEwkY9yarmMPjUYoLJzuIXigIJfFA8pDb/e31MVeqf6z5LwpyJvs0w1JDdQ==",
+      "type": "package",
+      "path": "NWebsec.AspNetCore.Core/1.0.0-gamma1-15",
+      "files": [
+        "NWebsec.AspNetCore.Core.1.0.0-gamma1-15.nupkg.sha512",
+        "NWebsec.AspNetCore.Core.nuspec",
+        "lib/net451/NWebsec.AspNetCore.Core.dll",
+        "lib/net451/NWebsec.AspNetCore.Core.xml",
+        "lib/netstandard1.3/NWebsec.AspNetCore.Core.dll",
+        "lib/netstandard1.3/NWebsec.AspNetCore.Core.xml"
+      ]
+    },
+    "NWebsec.AspNetCore.Middleware/1.0.0-gamma1-15": {
+      "sha512": "+4nPhC208i873jIWa53W0RSoHvp+po+/2zdSHXhQpCX+GSbK9/lWoB4S72Q0z7tV/7aMj/xaVLArTskmQ4QJ/A==",
+      "type": "package",
+      "path": "NWebsec.AspNetCore.Middleware/1.0.0-gamma1-15",
+      "files": [
+        "NWebsec.AspNetCore.Middleware.1.0.0-gamma1-15.nupkg.sha512",
+        "NWebsec.AspNetCore.Middleware.nuspec",
+        "lib/net451/NWebsec.AspNetCore.Middleware.dll",
+        "lib/net451/NWebsec.AspNetCore.Middleware.xml",
+        "lib/netstandard1.3/NWebsec.AspNetCore.Middleware.dll",
+        "lib/netstandard1.3/NWebsec.AspNetCore.Middleware.xml"
       ]
     },
     "runtime.native.System/4.0.0": {
@@ -10027,7 +10079,8 @@
       "Microsoft.Extensions.Logging.Debug >= 1.0.0",
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 1.0.0",
       "Microsoft.NETCore.App >= 1.0.0",
-      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0"
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0",
+      "NWebsec.AspNetCore.Middleware >= 1.0.0-gamma1-15"
     ],
     ".NETCoreApp,Version=v1.0": []
   },
