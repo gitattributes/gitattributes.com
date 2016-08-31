@@ -81,6 +81,14 @@ namespace GitAttributesWeb
                 options.MaxAge(minutes: 10).IncludeSubdomains();
             });
 
+            // configure HTTP Public Key Pinning policy
+            app.UseHpkpReportOnly(options =>
+            {
+                options.MaxAge(days: 30)
+                       .Sha256Pins("OckhHQiygSnN1Rw3EX+AhE/pd3osjeGq2YuWT9UoDHI=")
+                       .ReportUri("https://goit.report-uri.io/r/default/hpkp/reportOnly");
+            });
+
             // configure X-Content-Type-Options policy
             app.UseXContentTypeOptions();
 
