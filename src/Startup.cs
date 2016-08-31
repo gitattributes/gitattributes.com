@@ -64,6 +64,7 @@ namespace GitAttributesWeb
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
             app.UseApplicationInsightsRequestTelemetry();
 
+            // configure Content Security Policy policy
             app.UseCsp(options =>
             {
                 options.DefaultSources(s => s.Self());
@@ -74,6 +75,7 @@ namespace GitAttributesWeb
                 options.ReportUris(s => s.Uris("https://goit.report-uri.io/r/default/csp/enforce"));
             });
 
+            // configure HTTP Strict Transport Security policy
             app.UseHsts(options =>
             {
                 options.MaxAge(minutes: 10).IncludeSubdomains();
