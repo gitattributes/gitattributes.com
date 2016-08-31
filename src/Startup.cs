@@ -74,6 +74,11 @@ namespace GitAttributesWeb
                 options.ReportUris(s => s.Uris("https://goit.report-uri.io/r/default/csp/enforce"));
             });
 
+            app.UseHsts(options =>
+            {
+                options.MaxAge(minutes: 10).IncludeSubdomains();
+            });
+
             // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
