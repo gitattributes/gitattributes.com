@@ -98,13 +98,13 @@ namespace GitAttributesWeb
                     options.MaxAge(days: 30).IncludeSubdomains();
                 });
 
-                // configure HTTP Public Key Pinning policy
-                app.UseHpkpReportOnly(options =>
-                {
-                    options.MaxAge(days: 30)
-                           .Sha256Pins("OckhHQiygSnN1Rw3EX+AhE/pd3osjeGq2YuWT9UoDHI=")
-                           .ReportUri("https://goit.report-uri.io/r/default/hpkp/reportOnly");
-                });
+                ////// configure HTTP Public Key Pinning policy
+                ////app.UseHpkpReportOnly(options =>
+                ////{
+                ////    options.MaxAge(days: 30)
+                ////           .Sha256Pins("OckhHQiygSnN1Rw3EX+AhE/pd3osjeGq2YuWT9UoDHI=")
+                ////           .ReportUri("https://goit.report-uri.io/r/default/hpkp/reportOnly");
+                ////});
 
                 // Add Error handling middleware which catches all application specific errors and
                 // send the request to the following path or controller action.
