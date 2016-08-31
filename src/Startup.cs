@@ -70,6 +70,8 @@ namespace GitAttributesWeb
                 options.StyleSources(s => s.Self().CustomSources("fonts.googleapis.com"));
                 options.ScriptSources(s => s.Self().CustomSources("code.jquery.com").UnsafeInline());
                 options.FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com"));
+
+                options.ReportUris(s => s.Uris("https://goit.report-uri.io/r/default/csp/enforce"));
             });
 
             // Add the following to the request pipeline only in development environment.
