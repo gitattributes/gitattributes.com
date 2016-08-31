@@ -95,7 +95,7 @@ namespace GitAttributesWeb
                 // configure HTTP Strict Transport Security policy
                 app.UseHsts(options =>
                 {
-                    options.MaxAge(minutes: 10).IncludeSubdomains();
+                    options.MaxAge(days: 30).IncludeSubdomains();
                 });
 
                 // configure HTTP Public Key Pinning policy
