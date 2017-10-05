@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.DotNet.Tools.Common;
 
 namespace NuGet
 {
@@ -46,7 +45,7 @@ namespace NuGet
 
             if (Path.DirectorySeparatorChar == '/')
             {
-                pattern = Regex.Escape(PathUtility.GetPathWithForwardSlashes(wildcard));
+                pattern = Regex.Escape(GetPathWithForwardSlashes(wildcard));
                 // regex wildcard adjustments for *nix-style file systems
                 pattern = pattern
                     .Replace(@"\*\*/", "(.*/)?") //For recursive wildcards /**/, include the current directory.
@@ -259,6 +258,11 @@ namespace NuGet
         private static bool IsEmptyDirectory(string directory)
         {
             return !Directory.EnumerateFileSystemEntries(directory).Any();
+        }
+
+        public static string GetPathWithForwardSlashes(string path)
+        {
+            return path.Replace('\\', '/');
         }
 
         private struct SearchPathResult
