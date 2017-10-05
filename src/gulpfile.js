@@ -6,12 +6,10 @@ var gulp = require("gulp"),
 var bower = require("main-bower-files");
 var bowerNormalize = require("gulp-bower-normalize");
 
-eval("var project = " + fs.readFileSync("./project.json"));
-
 var paths = {
   bower: "./bower_components/",
-  lib: "./" + project.webroot + "/lib/",
-  data: "./" + project.webroot + "/data/"
+  lib: "./wwwroot/lib/",
+  data: "./wwwroot/data/"
 };
 
 gulp.task("clean", function () {
