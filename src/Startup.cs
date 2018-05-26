@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GitAttributesWeb.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,25 +16,12 @@ namespace GitAttributesWeb
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            // Setup configuration sources.
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("config.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                configuration.AddApplicationInsightsSettings(developerMode: true);
-            }
-
-            configuration.AddEnvironmentVariables();
-
-            this.Configuration = configuration.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,8 +30,14 @@ namespace GitAttributesWeb
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             // Add MVC services to the services container.
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<MvcOptions>(options =>
             {
                 options.OutputFormatters.Clear();
@@ -58,12 +52,6 @@ namespace GitAttributesWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            // Add Application Insights monitoring to the request pipeline as a very first middleware.
-            app.UseApplicationInsightsRequestTelemetry();
-
             // configure Content Security Policy policy
             app.UseCsp(options =>
             {
@@ -84,37 +72,23 @@ namespace GitAttributesWeb
             // configure X-XSS-Protection policy
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
 
-            // Add the following to the request pipeline only in development environment.
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
+                app.UseExceptionHandler("/Home/Error");
+
                 // configure HTTP Strict Transport Security policy
                 app.UseHsts(options =>
                 {
                     options.MaxAge(days: 30).IncludeSubdomains();
                 });
-
-                ////// configure HTTP Public Key Pinning policy
-                ////app.UseHpkpReportOnly(options =>
-                ////{
-                ////    options.MaxAge(days: 30)
-                ////           .Sha256Pins("OckhHQiygSnN1Rw3EX+AhE/pd3osjeGq2YuWT9UoDHI=")
-                ////           .ReportUri("https://goit.report-uri.io/r/default/hpkp/reportOnly");
-                ////});
-
-                // Add Error handling middleware which catches all application specific errors and
-                // send the request to the following path or controller action.
-                app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseApplicationInsightsExceptionTelemetry();
-
-            // Add static files to the request pipeline.
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>

@@ -14,8 +14,8 @@
   <script type="text/javascript" src="~/lib/bootswatch-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="~/lib/selectize/js/selectize.js"></script>
 
-  <environment names="prod">
-    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+  <environment names="Production">
+    @Html.Raw(JavaScriptSnippet.FullScript)
   </environment>
 </head>
 <body>
