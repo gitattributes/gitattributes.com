@@ -65,7 +65,7 @@ SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 :: ----------------------
 
 echo Installing gulp-cli
-call npm install gulp-cli@2.x.x --global
+call :ExecuteCmd npm install gulp-cli@2.x.x --global
 IF !ERRORLEVEL! NEQ 0 goto error
 
 
