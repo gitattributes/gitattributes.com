@@ -15,6 +15,11 @@ IF %ERRORLEVEL% NEQ 0 (
   goto error
 )
 
+
+echo Installing gulp-cli
+call npm install gulp-cli@2.x.x --global
+IF !ERRORLEVEL! NEQ 0 goto error
+
 :: Setup
 :: -----
 
