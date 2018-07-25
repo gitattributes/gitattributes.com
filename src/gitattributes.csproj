@@ -15,7 +15,7 @@
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <Exec Command="npm install" />
-    <Exec Command="gulp copy" />
+    <Exec Command="gulp build" />
   </Target>
 
   <ItemGroup>

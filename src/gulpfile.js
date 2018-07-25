@@ -1,18 +1,22 @@
 ﻿/// <binding Clean='clean' />
 
-var gulp = require("gulp"),
-  del = require("del"),
-  fs = require("fs");
+const gulp = require("gulp");
+const del = require("del");
+const fs = require("fs");
 
-var paths = {
+const paths = {
   data: "./wwwroot/data/"
 };
 
-gulp.task("clean", function () {
+function clean() {
   return del([paths.data]);
-});
+};
 
-gulp.task("copy", ["clean"], function () {
-  gulp.src('./data/gitattributes/*.gitattributes')
+function copy() {
+  return gulp.src('./data/gitattributes/*.gitattributes')
    .pipe(gulp.dest(paths.data));
-});
+};
+
+const build = gulp.series(clean, copy);
+gulp.task('build', build);
+gulp.task('default', build);
