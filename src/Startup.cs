@@ -37,7 +37,7 @@ namespace GitAttributesWeb
             });
 
             // Add MVC services to the services container.
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.Configure<MvcOptions>(options =>
             {
                 options.OutputFormatters.Clear();
