@@ -18,5 +18,7 @@ function copy() {
 };
 
 const build = gulp.series(clean, copy);
-gulp.task('build', build);
-gulp.task('default', build);
+
+exports.build = build;
+exports.clean = clean;
+exports.default = build;
