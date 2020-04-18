@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="npm install" />
+    <Exec Command="npm install --no-fund" />
     <Exec Command="npm run build" />
   </Target>
 
