@@ -1,5 +1,7 @@
 @if "%SCM_TRACE_LEVEL%" NEQ "4" @echo off
 
+SET DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 :: ----------------------
 :: KUDU Deployment Script
 :: Version: 1.0.17
