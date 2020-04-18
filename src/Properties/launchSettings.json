@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:7660/",
-      "sslPort": 0
+      "sslPort": 44399
     }
   },
   "profiles": {
@@ -12,7 +12,8 @@
       "commandName": "IISExpress",
       "environmentVariables": {
         "ASPNET_ENV": "dev"
-      }
+      },
+      "use64Bit": true
     },
     "web": {
       "commandName": "web",

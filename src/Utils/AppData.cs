@@ -11,12 +11,12 @@ namespace GitAttributesWeb.Utils
     {
         private IEnumerable<FileTemplateInfo> files;
 
-        public AppData(IHostingEnvironment env)
+        public AppData(IWebHostEnvironment env)
         {
             this.Init(env);
         }
 
-        private void Init(IHostingEnvironment env)
+        private void Init(IWebHostEnvironment env)
         {
             var dataPath = Path.Combine(env.WebRootPath, "data");
             var files = PathResolver.PerformWildcardSearch(dataPath, "*.gitattributes");

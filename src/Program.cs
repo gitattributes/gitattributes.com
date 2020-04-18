@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace GitAttributesWeb
 {
@@ -12,11 +13,13 @@ namespace GitAttributesWeb
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        public static IHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                          .UseApplicationInsights()
-                          .UseStartup<Startup>();
+            return Host.CreateDefaultBuilder(args)
+                        .ConfigureWebHostDefaults(webBuilder =>
+                        {
+                            webBuilder.UseStartup<Startup>();
+                        });
         }
     }
 }

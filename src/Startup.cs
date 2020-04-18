@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GitAttributesWeb.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NWebsec.AspNetCore.Middleware;
+using GitAttributesWeb.Utils;
 
 namespace GitAttributesWeb
 {
@@ -37,7 +37,7 @@ namespace GitAttributesWeb
             });
 
             // Add MVC services to the services container.
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
             services.Configure<MvcOptions>(options =>
             {
                 options.OutputFormatters.Clear();
@@ -45,12 +45,14 @@ namespace GitAttributesWeb
                 var textOutput = new StringOutputFormatter2();
                 options.OutputFormatters.Add(textOutput);
             });
+            
+            services.AddApplicationInsightsTelemetry();
 
             services.AddSingleton<AppData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             // configure Content Security Policy policy
             app.UseCsp(options =>
@@ -88,14 +90,14 @@ namespace GitAttributesWeb
             }
 
             app.UseStaticFiles();
+            app.UseRouting();
             app.UseCookiePolicy();
 
-            // Add MVC to the request pipeline.
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
