@@ -81,11 +81,9 @@ namespace GitAttributesWeb.Controllers
             var sb = new StringBuilder();
             foreach (var file in q.ToList())
             {
-                using (var reader = System.IO.File.OpenText(file.Path))
-                {
-                    var content = await reader.ReadToEndAsync();
-                    sb.Append(content);
-                }
+                using var reader = System.IO.File.OpenText(file.Path);
+                var content = await reader.ReadToEndAsync();
+                sb.Append(content);
             }
 
             return sb.ToString();
