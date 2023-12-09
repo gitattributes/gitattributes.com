@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
+using System.Text.Json;
 using NuGet;
 
 namespace GitAttributesWeb.Utils
@@ -44,7 +44,7 @@ namespace GitAttributesWeb.Utils
         {
             get
             {
-                return JsonConvert.SerializeObject(this.Files);
+                return JsonSerializer.Serialize(this.Files);
             }
         }
     }
